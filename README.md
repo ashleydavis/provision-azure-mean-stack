@@ -4,6 +4,8 @@ A template script for provisioning Azure networks and VMs with [MEAN stack](http
 
 You must have [azure-cli](https://www.npmjs.com/package/azure-cli) [installed](https://www.npmjs.com/package/azure-cli#installation) and [authenticated](https://azure.microsoft.com/en-us/documentation/articles/xplat-cli-connect/) to use this.
 
+If you are looking for an Azure API, please see [this repo](https://github.com/codecapers/azure-api).
+
 Clone the repo locally:
 
 	git clone https://github.com/codecapers/deploy-azure-mean-stack.git

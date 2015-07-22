@@ -2,7 +2,7 @@
 
 var argv = require('yargs').argv;
 var config = require('./config');
-var azure = require('./azure-api');
+var azure = require('azure-api');
 var Q = require('q');
 var E = require('linq');
 

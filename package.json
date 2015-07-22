@@ -4,6 +4,7 @@
   "description": "A template script for provisioning Azure networks and VMs with MEAN stack installed",
   "main": "gulpfile.js",
   "dependencies": {
+    "azure-api": "0.0.2",
     "child-process-promise": "^1.1.0",
     "linq": "^3.0.4-beta",
     "q": "^1.4.1",
