@@ -1,4 +1,4 @@
-# deploy-azure-mean-stack
+# provision-azure-mean-stack
 
 A template script for provisioning Azure networks and VMs with [MEAN stack](https://en.wikipedia.org/wiki/MEAN_(software_bundle)) installed.
 
@@ -28,4 +28,4 @@ To deploy the Azure resources defined in *config.js*:
 
 Then wait for the script to complete (this can take some time).
 
- 
+ The project also contains an example Vagrant file that can boot a similar local VM network.
