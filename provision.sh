@@ -19,6 +19,7 @@ sudo service mongodb restart
 echo "============== Creating deployment repo =================="
 mkdir deployment
 cd deployment
+mkdir logs
 hg init
 cd .hg
 echo "[hooks]" >> hgrc
