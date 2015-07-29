@@ -19,8 +19,10 @@ var provisionVM = function (vm, networkName, vmBaseName) {
 			return azure.waitVmRunning(vmName);
 		})
 		.then(function () {
-			var host = vmName + '.cloudapp.net';
-			return azure.runSshScript(host, vm.user, vm.pass, vm.provisionScript);
+			if (vm.provisionScript) {
+				var host = vmName + '.cloudapp.net';
+				return azure.runSshScript(host, vm.user, vm.pass, vm.provisionScript);
+			}
 		});
 };
 
@@ -42,7 +44,7 @@ var provisionVms = function (vms, networkName, vmBaseName) {
 //
 var provisionNetwork = function (network) {
 	console.log('Creating network ' + network.name + ' in location ' + network.location);
-	
+
 	return azure.createNetwork(network.name, network.location)
 		.then(function () {
 			return provisionVms(network.vms, network.name, network.vmBaseName);
