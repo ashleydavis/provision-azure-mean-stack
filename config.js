@@ -19,6 +19,7 @@ module.exports = {
 					imageName: 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu_DAILY_BUILD-trusty-14_04_2-LTS-amd64-server-20150708-en-us-30GB',
 					user: 'Test1234',
 					pass: 'Test1234!',
+					ip: "10.0.0.4",
 					endpoints: [
 						{
 							name: 'HTTP',
@@ -33,6 +34,7 @@ module.exports = {
 					imageName: 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu_DAILY_BUILD-trusty-14_04_2-LTS-amd64-server-20150708-en-us-30GB',
 					user: 'Test1234',
 					pass: 'Test1234!',
+					ip: "10.0.0.5",
 					endpoints: [
 						{
 							name: 'HTTP',
