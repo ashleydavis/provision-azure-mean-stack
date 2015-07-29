@@ -11,7 +11,7 @@ var E = require('linq');
 //
 var provisionVM = function (vm, networkName, vmBaseName) {
 	var vmName = vmBaseName && (vmBaseName + vm.name) || vm.name;
-	return azure.createVM(vmName, networkName, vm.imageName, vm.user, vm.pass, vm.endpoints)
+	return azure.createVM(vmName, networkName, vm.imageName, vm.user, vm.pass, vm.ip, vm.endpoints)
 		.then(function () {
 			return azure.waitVmRunning(vmName);
 		})

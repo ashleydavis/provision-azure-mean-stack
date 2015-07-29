@@ -29,6 +29,7 @@ module.exports = {
 					],
 					provisionScript: 'provision.sh',
 				},
+				/*
 				{
 					name: 'sometestvm2',
 					imageName: 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu_DAILY_BUILD-trusty-14_04_2-LTS-amd64-server-20150708-en-us-30GB',
@@ -44,6 +45,7 @@ module.exports = {
 					],
 					provisionScript: 'provision.sh',
 				},
+				*/
 			],
 		},
 	],
