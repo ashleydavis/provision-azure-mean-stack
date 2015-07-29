@@ -41,7 +41,7 @@ var runSshScriptFile = function (host, user, pass, scriptFilePath, templateView)
 // Generate a URL for the VM.
 //
 var genHostName = function (vmName) {
-	return fullVmName + '.cloudapp.net';
+	return vmName + '.cloudapp.net';
 };
 
 //
