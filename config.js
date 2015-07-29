@@ -10,8 +10,8 @@
 module.exports = {
 	networks: [
 		{
-			name: 'mytestnetwork',
-			vmBaseName: 'mytestnetwork-',
+			name: 'mytestnetwork800',
+			vmBaseName: 'mytestnetwork800-',
 			location: 'Australia East',	
 			vms: [
 				{
@@ -27,11 +27,13 @@ module.exports = {
 							internalPort: 3000,						
 						},
 					],
-					provisionScript: 'provision.sh',
+					provisionScript: [
+						'provision.sh',
+						'provision.sh',
+					],
 				},
-				/*
 				{
-					name: 'sometestvm2',
+					fullName: 'sometestvm2',
 					imageName: 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu_DAILY_BUILD-trusty-14_04_2-LTS-amd64-server-20150708-en-us-30GB',
 					user: 'Test1234',
 					pass: 'Test1234!',
@@ -45,7 +47,19 @@ module.exports = {
 					],
 					provisionScript: 'provision.sh',
 				},
-				*/
+				{
+					fullName: 'FullyQualifiedVMName',
+					imageName: 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu_DAILY_BUILD-trusty-14_04_2-LTS-amd64-server-20150708-en-us-30GB',
+					user: 'Test1234',
+					pass: 'Test1234!',
+					endpoints: [
+						{
+							name: 'HTTP',
+							externalPort: 80,
+							internalPort: 3000,						
+						},
+					],
+				},
 			],
 		},
 	],
