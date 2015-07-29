@@ -23,10 +23,7 @@ sudo sed -i 's/bind_ip = 127.0.0.1/#bind_ip  = 127.0.0.1/g' /etc/mongodb.conf >>
 sudo service mongodb restart >> $LOG 2>&1
 echo "============== Creating deployment repo ==================" >> $LOG 2>&1
 mkdir deployment >> $LOG 2>&1
-pwd >>  $LOG 2>&1
-ls >>  $LOG 2>&1
 mkdir ./deployment/logs >> $LOG 2>&1
-echo "Created logs dir" >>  $LOG 2>&1
 hg init deployment >> $LOG 2>&1
 echo "[hooks]" >> deployment/.hg/hgrc
 echo "changegroup = hg up >> ./logs/update.log; chmod +x ./Deploy/server_restart.sh; ./Deploy/server_restart.sh" >> deployment/.hg/hgrc
