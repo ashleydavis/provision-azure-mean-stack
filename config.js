@@ -11,6 +11,7 @@ module.exports = {
 	networks: [
 		{
 			name: 'mytestnetwork',
+			vmBaseName: 'mytestnetwork-',
 			location: 'Australia East',	
 			vms: [
 				{
