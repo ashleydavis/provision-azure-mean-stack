@@ -46,7 +46,7 @@ var runProvisioningScripts = function (vm, fullVmName) {
 			);
 		}
 		else {
-			return runSshScript(host, vm.user, vm.pass, vm.provisionScript vm);
+			return runSshScript(host, vm.user, vm.pass, vm.provisionScript, vm);
 		}
 	}
 	else {
