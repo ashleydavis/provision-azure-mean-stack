@@ -25,7 +25,7 @@ Vagrant.configure(2) do |config|
     config.vm.define :sometestvm2 do |vm|
         vm.vm.provision :shell, path: "provision.sh", privileged: false
         vm.vm.host_name = "sometestvm2"
-        vm.vm.network "private_network", ip: "10.0.0.3"
+        vm.vm.network "private_network", ip: "10.0.0.2"
     end
 end
 
