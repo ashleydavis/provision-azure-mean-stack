@@ -32,11 +32,18 @@ var runSshScript = function (host, user, pass, scriptFilePath, templateView) {
 };
 
 //
+// Generate a URL for the VM.
+//
+var genHostName = function (vmName) {
+	return fullVmName + '.cloudapp.net';
+};
+
+//
 // Run a single or set of provisioning scripts on the VM.
 //
 var runProvisioningScripts = function (vm, fullVmName) {
 	if (vm.provisionScript) {
-		var host = fullVmName + '.cloudapp.net';
+		var host = genHostName(fullVmName);
 		if (util.isArray(vm.provisionScript)) {
 			return Q.all(E.from(vm.provisionScript)
 				.select(function (script) {
