@@ -50,7 +50,7 @@ var genHostName = function (vmName) {
 var runProvisioningScripts = function (vm, fullVmName, provisionScript) {
 	if (provisionScript) {
 		var host = genHostName(fullVmName);
-		if (util.isArray(vprovisionScript)) {
+		if (util.isArray(provisionScript)) {
 			return Q.all(E.from(provisionScript)
 				.select(function (script) {
 					return runSshScriptFile(host, vm.user, vm.pass, script, vm)
