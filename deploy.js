@@ -13,22 +13,28 @@ var fs = require('fs');
 //
 // Run a templated shell script on a particular Azure VM via ssh.
 //
-var runSshScript = function (host, user, pass, scriptFilePath, templateView) {
+var runSshScript = function (host, user, pass, scriptTemplate, templateView) {
 	var sshConfig = {
 		host: host,
 		username: user,
 		password: pass,
 	};
 
-	console.log('Running provisioning script ' + scriptFilePath + ' on VM ' + host);
-
-	var scriptTemplate = fs.readFileSync(scriptFilePath).toString();
-	console.log('template: ' + scriptTemplate);
 	var scriptInstance = Mustache.render(scriptTemplate, templateView);
-	console.log('instance: ' + scriptInstance);
 
 	var ssh = new SshClient(sshConfig);
 	return ssh.exec(scriptInstance);
+};
+
+//
+// Run a templated shell script on a particular Azure VM via ssh.
+//
+var runSshScriptFile = function (host, user, pass, scriptFilePath, templateView) {
+
+	console.log('Running provisioning script ' + scriptFilePath + ' on VM ' + host);
+
+	var scriptTemplate = fs.readFileSync(scriptFilePath).toString();
+	return runSshScript(host, user, pass, scriptTemplate, templateView);
 };
 
 //
@@ -41,19 +47,19 @@ var genHostName = function (vmName) {
 //
 // Run a single or set of provisioning scripts on the VM.
 //
-var runProvisioningScripts = function (vm, fullVmName) {
-	if (vm.provisionScript) {
+var runProvisioningScripts = function (vm, fullVmName, provisionScript) {
+	if (provisionScript) {
 		var host = genHostName(fullVmName);
-		if (util.isArray(vm.provisionScript)) {
-			return Q.all(E.from(vm.provisionScript)
+		if (util.isArray(vprovisionScript)) {
+			return Q.all(E.from(provisionScript)
 				.select(function (script) {
-					return runSshScript(host, vm.user, vm.pass, script, vm)
+					return runSshScriptFile(host, vm.user, vm.pass, script, vm)
 				})
 				.toArray()
 			);
 		}
 		else {
-			return runSshScript(host, vm.user, vm.pass, vm.provisionScript, vm);
+			return runSshScriptFile(host, vm.user, vm.pass, provisionScript, vm);
 		}
 	}
 	else {
@@ -94,7 +100,7 @@ var provisionVM = function (vm, networkName, vmBaseName) {
 			return azure.waitVmRunning(fullVmName);
 		})
 		.then(function () {
-			return runProvisioningScripts(vm, fullVmName);
+			return runProvisioningScripts(vm, fullVmName, vm.provisionScript);
 		});
 };
 
@@ -134,11 +140,27 @@ var provisionNetworks = function (networks) {
 		.toArray();
 };
 
-Q.all(provisionNetworks(config.networks))	
-	.then(function () {
-		console.log('Provisioning complete');
-	})
-	.catch(function (err) {
-		console.error('An error occurred during provisioning:');
-		console.error(err.stack);
-	});
+if (!module.parent) {
+
+	Q.all(provisionNetworks(config.networks))	
+		.then(function () {
+			console.log('Provisioning complete');
+		})
+		.catch(function (err) {
+			console.error('An error occurred during provisioning:');
+			console.error(err.stack);
+		});
+}
+else {
+
+	module.exports = {
+		runSshScript: runSshScript,
+		runSshScriptFile: runSshScriptFile,
+		genHostName: genHostName,
+		runProvisioningScripts: runProvisioningScripts,
+		provisionVM: provisionVM,
+		provisionVms: provisionVms,
+		provisionNetwork: provisionNetwork,
+		provisionNetworks: provisionNetworks, 
+	};
+}

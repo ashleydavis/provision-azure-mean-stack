@@ -1,8 +1,8 @@
 {
-  "name": "provisioning-azure-mean-stack",
-  "version": "0.0.0",
-  "description": "A template script for provisioning Azure networks and VMs with MEAN stack installed",
-  "main": "gulpfile.js",
+  "name": "provision-azure-mean-stack",
+  "version": "0.0.1",
+  "description": "A script/API for provisioning Azure networks and VMs with MEAN stack installed",
+  "main": "deploy.js",
   "dependencies": {
     "azure-api": "0.0.6",
     "child-process-promise": "^1.1.0",
