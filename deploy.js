@@ -31,11 +31,31 @@ var runProvisioningScripts = function (vm, fullVmName) {
 };
 
 //
+// Generate the full name for a VM.
+//
+var genFullVmName = function (vm, vmBaseName) {
+	if (vm.fullName) {
+		return vm.fullName;
+	}
+
+	if (vmBaseName) {
+		return vmBaseName + vm.name;
+	}
+
+	if (vm.name) {
+		return vm.name;
+	}
+
+	throw new Error("VM has no name!");
+}
+
+//
 // Create and provision a specific VM.
 //
 var provisionVM = function (vm, networkName, vmBaseName) {
 
-	var fullVmName = vmBaseName && (vmBaseName + vm.name) || vm.name;
+
+	var fullVmName = genFullVmName(vm, vmBaseName);
 	console.log('Creating VM: ' + fullVmName);
 
 	return azure.createVM(fullVmName, networkName, vm.imageName, vm.user, vm.pass, vm.ip, vm.endpoints)
