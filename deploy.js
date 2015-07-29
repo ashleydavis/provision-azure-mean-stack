@@ -5,24 +5,45 @@ var config = require('./config');
 var azure = require('azure-api');
 var Q = require('q');
 var E = require('linq');
+var util = require('util');
+
+//
+// Run a single or set of provisioning scripts on the VM.
+//
+var runProvisioningScripts = function (vm, fullVmName) {
+	if (vm.provisionScript) {
+		var host = fullVmName + '.cloudapp.net';
+		if (utils.isArray(vm.provisionScript)) {
+			return Q.all(E.from(vm.provisionScript)
+				.select(function (script) {
+					return azure.runSshScript(host, vm.user, vm.pass, script)
+				})
+				.toArray()
+			);
+		}
+		else {
+			return azure.runSshScript(host, vm.user, vm.pass, vm.provisionScript);
+		}
+	}
+	else {
+		return Q();
+	}
+};
 
 //
 // Create and provision a specific VM.
 //
 var provisionVM = function (vm, networkName, vmBaseName) {
 
-	var vmName = vmBaseName && (vmBaseName + vm.name) || vm.name;
-	console.log('Creating VM: vmName');
+	var fullVmName = vmBaseName && (vmBaseName + vm.name) || vm.name;
+	console.log('Creating VM: ' + fullVmName);
 
-	return azure.createVM(vmName, networkName, vm.imageName, vm.user, vm.pass, vm.ip, vm.endpoints)
+	return azure.createVM(fullVmName, networkName, vm.imageName, vm.user, vm.pass, vm.ip, vm.endpoints)
 		.then(function () {
-			return azure.waitVmRunning(vmName);
+			return azure.waitVmRunning(fullVmName);
 		})
 		.then(function () {
-			if (vm.provisionScript) {
-				var host = vmName + '.cloudapp.net';
-				return azure.runSshScript(host, vm.user, vm.pass, vm.provisionScript);
-			}
+			return runProvisioningScripts(vm, fullVmName);
 		});
 };
 
