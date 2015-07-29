@@ -14,6 +14,7 @@ var runProvisioningScripts = function (vm, fullVmName) {
 	if (vm.provisionScript) {
 		var host = fullVmName + '.cloudapp.net';
 		if (utils.isArray(vm.provisionScript)) {
+		if (util.isArray(vm.provisionScript)) {
 			return Q.all(E.from(vm.provisionScript)
 				.select(function (script) {
 					return azure.runSshScript(host, vm.user, vm.pass, script)
