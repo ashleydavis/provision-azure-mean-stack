@@ -6,6 +6,30 @@ var azure = require('azure-api');
 var Q = require('q');
 var E = require('linq');
 var util = require('util');
+var Mustache = require('Mustache');
+var SshClient = require('ssh-promise');
+var fs = require('fs');
+
+//
+// Run a templated shell script on a particular Azure VM via ssh.
+//
+var runSshScript = function (host, user, pass, scriptFilePath, templateView) {
+	var sshConfig = {
+		host: host,
+		username: user,
+		password: pass,
+	};
+
+	console.log('Running provisioning script ' + scriptFilePath + ' on VM ' + host);
+
+	var scriptTemplate = fs.readFileSync(scriptFilePath).toString();
+	console.log('template: ' + scriptTemplate);
+	var scriptInstance = Mustache.render(scriptTemplate, templateView);
+	console.log('instance: ' + scriptInstance);
+
+	var ssh = new SshClient(sshConfig);
+	return ssh.exec(scriptInstance);
+};
 
 //
 // Run a single or set of provisioning scripts on the VM.
@@ -13,17 +37,16 @@ var util = require('util');
 var runProvisioningScripts = function (vm, fullVmName) {
 	if (vm.provisionScript) {
 		var host = fullVmName + '.cloudapp.net';
-		if (utils.isArray(vm.provisionScript)) {
 		if (util.isArray(vm.provisionScript)) {
 			return Q.all(E.from(vm.provisionScript)
 				.select(function (script) {
-					return azure.runSshScript(host, vm.user, vm.pass, script)
+					return runSshScript(host, vm.user, vm.pass, script, vm)
 				})
 				.toArray()
 			);
 		}
 		else {
-			return azure.runSshScript(host, vm.user, vm.pass, vm.provisionScript);
+			return runSshScript(host, vm.user, vm.pass, vm.provisionScript vm);
 		}
 	}
 	else {
