@@ -10,7 +10,10 @@ var E = require('linq');
 // Create and provision a specific VM.
 //
 var provisionVM = function (vm, networkName, vmBaseName) {
+
 	var vmName = vmBaseName && (vmBaseName + vm.name) || vm.name;
+	console.log('Creating VM: vmName');
+
 	return azure.createVM(vmName, networkName, vm.imageName, vm.user, vm.pass, vm.ip, vm.endpoints)
 		.then(function () {
 			return azure.waitVmRunning(vmName);
@@ -38,6 +41,8 @@ var provisionVms = function (vms, networkName, vmBaseName) {
 // Provision an entire network and VMs.
 //
 var provisionNetwork = function (network) {
+	console.log('Creating network ' + network.name + ' in location ' + network.location);
+	
 	return azure.createNetwork(network.name, network.location)
 		.then(function () {
 			return provisionVms(network.vms, network.name, network.vmBaseName);
