@@ -1,10 +1,10 @@
 {
   "name": "provision-azure-mean-stack",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A script/API for provisioning Azure networks and VMs with MEAN stack installed",
   "main": "deploy.js",
   "dependencies": {
-    "azure-api": "0.0.8",
+    "azure-api": "0.0.9",
     "child-process-promise": "^1.1.0",
     "linq": "^3.0.4-beta",
     "mustache": "^2.1.3",
