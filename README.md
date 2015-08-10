@@ -8,11 +8,11 @@ If you are looking for an Azure API, please see [this repo](https://github.com/c
 
 Clone the repo locally:
 
-	git clone https://github.com/codecapers/deploy-azure-mean-stack.git
+	git clone https://github.com/codecapers/provision-azure-mean-stack.git
 
 CD into the repo directory:
 
-	cd deploy-azure-mean-stack
+	cd provision-azure-mean-stack
 
 Now have a look at *config.js*. This defines the networks and VMs that will be created and provisioned by this script. A test configuration is setup that you can run straight away to see if this script does what you want. 
 
@@ -24,7 +24,7 @@ In production you will need to tailor *config.js* to the needs of your project.
 
 To deploy the Azure resources defined in *config.js*:
 
-	node deploy.js
+	node provision.js
 
 Then wait for the script to complete (this can take some time).
 
