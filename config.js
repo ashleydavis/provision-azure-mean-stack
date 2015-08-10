@@ -29,7 +29,6 @@ module.exports = {
 					],
 					provisionScript: [
 						'provision.sh',
-						'provision.sh',
 					],
 				},
 				{
