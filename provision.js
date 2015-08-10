@@ -140,27 +140,11 @@ var provisionNetworks = function (networks) {
 		.toArray();
 };
 
-if (!module.parent) {
-
-	Q.all(provisionNetworks(config.networks))	
-		.then(function () {
-			console.log('Provisioning complete');
-		})
-		.catch(function (err) {
-			console.error('An error occurred during provisioning:');
-			console.error(err.stack);
-		});
-}
-else {
-
-	module.exports = {
-		runSshScript: runSshScript,
-		runSshScriptFile: runSshScriptFile,
-		genHostName: genHostName,
-		runProvisioningScripts: runProvisioningScripts,
-		provisionVM: provisionVM,
-		provisionVms: provisionVms,
-		provisionNetwork: provisionNetwork,
-		provisionNetworks: provisionNetworks, 
-	};
-}
+Q.all(provisionNetworks(config.networks))	
+	.then(function () {
+		console.log('Provisioning complete');
+	})
+	.catch(function (err) {
+		console.error('An error occurred during provisioning:');
+		console.error(err.stack);
+	});
