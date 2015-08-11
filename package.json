@@ -2,7 +2,7 @@
   "description": "A script/API for provisioning Azure networks and VMs with MEAN stack installed",
   "main": "deploy.js",
   "dependencies": {
-    "azure-api": "0.0.16",
+    "azure-api": "0.0.27",
     "chai": "^3.2.0",
     "child-process-promise": "^1.1.0",
     "linq": "^3.0.4-beta",

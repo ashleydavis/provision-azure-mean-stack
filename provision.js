@@ -2,7 +2,7 @@
 
 var argv = require('yargs').argv;
 var config = require('./config');
-var azure = require('azure-api');
+var azure = require('azure-api')({ verbose: true });
 var Q = require('q');
 var E = require('linq');
 var assert = require('chai').assert;
@@ -41,8 +41,17 @@ var provisionVms = function (vms, networkName, vmBaseName) {
 
 	var provisionVmPromises = E.from(vms)
 		.select(function (vm) {
-			var fullVmName = genFullVmName(vm, vmBaseName);
-			return azure.provisionVM(fullVmName, networkName, vm.imageName, vm.user, vm.pass, vm.ip, vm.endpoints, vm.provisionScript, vm);
+			return azure.provisionVM({
+					name: genFullVmName(vm, vmBaseName), 
+					networkName: networkName, 
+					imageName: vm.imageName, 
+					user: vm.user, 
+					pass: vm.pass, 
+					staticIp: vm.ip, 
+					endpoints: vm.endpoints, 
+					provisionScript: vm.provisionScript,
+					provisioningTemplateView: vm,
+				});
 		})
 		.toArray()
 
